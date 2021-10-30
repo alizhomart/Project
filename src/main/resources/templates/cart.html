@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="home.html" layout:fragment="content">
+
+<div class="container-fluid">
+    <nav class="navbar-light bg-light mb-4" style="margin: 0">
+        <div class="container">
+            <form th:action="@{'/search'}" method="get" class="d-flex">
+                <input class="form-control me-3" name="name" type="search" th:placeholder="#{search}" aria-label="Search" style="width: 900px;">
+                <button class="btn btn-success" type="submit" style="width: 120px" th:text="#{search}"></button>
+            </form>
+        </div>
+    </nav>
+
+    <h2 th:text="#{basket}"></h2>
+    <div class="row mt-3">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="it : ${basket}">
+                    <td th:text="${it.item.name}">1</td>
+                    <td th:text="${it.price}"></td>
+                    <td th:text="${it.count}"></td>
+                    <td>
+                        <form th:action="@{'/addtocart2'}" method="post">
+                            <input type="hidden" th:value="${it.item.id}" name="itemId">
+                            <button type="submit" class="btn btn-success" style="width:30px;">+</button>
+                        </form>
+                        <form th:action="@{'/remove'}" method="post">
+                            <input type="hidden" th:value="${it.item.id}" name="id">
+                            <button type="submit" class="btn btn-danger" style="width:30px;">-</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="navbar">
+                <p class="h5" th:text="'TOTAL: ' + ${totalPrice}+' ₸'"></p>
+                <div class="d-flex">
+                    <button class="btn btn-light" th:text="#{checkin}"></button>
+                    <form th:action="@{'/removeAll'}" method="post">
+                        <button class="btn btn-danger ms-2" th:text="#{clearbasket}"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

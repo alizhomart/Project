@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-success" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <div class="container">
+    <a class="navbar-brand" th:href="@{'/'}" style="font-weight: bold">ALL-IN SHOP</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      </ul>
+      <ul class="navbar-nav d-flex" sec:authorize="isAnonymous()">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            ENG
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" th:href="@{'?lng=en'}">ENG</a></li>
+            <li><a class="dropdown-item" th:href="@{'?lng=ru'}">РУС</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{'/cart'}" th:text="#{basket}">Basket</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{'/loginpage'}" th:text="#{login}">Login</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav d-flex" sec:authorize="isAuthenticated()">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{'/profile'}" th:text="${CURRENT_USER!=null?CURRENT_USER.fullname:''}"></a>
+        </li>
+        <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+          <a class="nav-link active" aria-current="page" th:href="@{'/adminUsers'}" th:text="#{adminPanel}">Admin Panel</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            ENG
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" th:href="@{'?lng=en'}">ENG</a></li>
+            <li><a class="dropdown-item" th:href="@{'?lng=ru'}">РУС</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{'/cart'}" th:text="#{basket}">Basket</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="JavaScript:void(0)" onclick="logout()" th:text="#{logout}">Logout</a>
+        </li>
+        <script type="text/javascript" >
+          function logout(){
+            document.getElementById('logoutFormId').submit();
+          }
+        </script>
+        <form th:action="@{'/tologout'}" method="post" id="logoutFormId"></form>
+      </ul>
+    </div>
+  </div>
+</nav>

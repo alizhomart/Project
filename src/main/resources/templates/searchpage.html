@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="home.html" layout:fragment="content">
+<div class="container-fluid">
+    <div class="navbar">
+        <form th:action="@{'/searchpage'}" method="get" class="row g-3 mb-3">
+            <div class="col-md-4 me-2">
+                <label class="mb-2" th:text="#{name}"></label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="col-md-2 me-2">
+                <label class="mb-2" th:text="#{priceF}">Price From:</label>
+                <input type="number" class="form-control" name="priceFrom">
+            </div>
+            <div class="col-md-2 me-2">
+                <label class="mb-2" th:text="#{priceT}">Price To:</label>
+                <input type="number" class="form-control" name="priceTo">
+            </div>
+            <div class="col-md-2 d-flex">
+                <button type="submit" class="btn btn-success mt-4" style="width: 250px;" th:text="#{search}"></button>
+            </div>
+        </form>
+    </div>
+
+    <div class="navbar mb-2">
+        <p class="h3" th:text="#{searchres}"></p>
+        <div class="d-flex">
+            <label class="input-group-text" style="color: gray;" th:text="#{orderbyprice}">Order by price:</label>
+            <a class="btn btn-light" th:text="#{ascending}"></a>
+            <a class="btn btn-light" th:text="#{descending}"></a>
+        </div>
+    </div>
+    <div th:if="${itemss == null}">
+        <div class="row row-cols-1 row-cols-md-3 g-5">
+            <div class="col" th:each="it : ${items}">
+                <div class="card" style="height: 578px;">
+                    <img th:src="${it.imageURL}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h4><a style="text-decoration: none;" class="card-text" th:text="${it.name}" th:href="@{'/item-details/'+${it.id}+'.html'}"></a></h4>
+                        <h4 class="card-text" th:text="${it.price} + ' ₸'"></h4>
+                        <p class="card-title" th:text="${it.description}"></p>
+                    </div>
+                    <div class="card-footer">
+                        <i class="fa fa-star" th:each="star:${#numbers.sequence(1, it.stars)}" style="margin-right: 3px"></i>
+                        <i class="fa fa-star-o" th:each="star:${#numbers.sequence(it.stars, 4)}" style="margin-right: 3px"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${itemss != null}">
+        <div class="row row-cols-1 row-cols-md-3 g-5">
+            <div class="col" th:each="it : ${itemss}">
+                <div class="card" style="height: 578px;">
+                    <img th:src="${it.imageURL}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h4><a style="text-decoration: none;" class="card-text" th:text="${it.name}" th:href="@{'/item-details/'+${it.id}+'.html'}"></a></h4>
+                        <h4 class="card-text" th:text="${it.price} + ' ₸'"></h4>
+                        <p class="card-title" th:text="${it.description}"></p>
+                    </div>
+                    <div class="card-footer">
+                        <i class="fa fa-star" th:each="star:${#numbers.sequence(1, it.stars)}" style="margin-right: 3px"></i>
+                        <i class="fa fa-star-o" th:each="star:${#numbers.sequence(it.stars, 4)}" style="margin-right: 3px"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

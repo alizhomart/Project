@@ -1,0 +1,24 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin.html">
+<div class="container-fluid" layout:fragment="admin">
+  <div class="row">
+    <div class="col-12">
+      <form th:action="@{'/editBrand'}" method="post">
+        <div class="mb-3">
+          <label th:text="#{name}">Name:</label>
+          <input class="form-control mt-2" name="name" th:value="${brand.name}" type="text">
+        </div>
+        <div class="mb-3">
+          <label th:text="#{brand}">Brand:</label>
+          <select class="form-control mt-2" name="countryId">
+            <option th:each="country : ${countries}" th:text="${country.name} +' / '+ ${country.code}" th:value="${country.id}"></option>
+          </select>
+        </div>
+        <div class="mb-3">
+            <input type="hidden" th:value="${brand.id}" name="brandId">
+            <button class="btn btn-success mx-auto  " style="width: 200px;" th:text="#{edit}">Edit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</html>

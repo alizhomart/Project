@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="home.html" layout:fragment="content">
+
+<div class="container-fluid">
+    <div class="card mb-3" style="max-width: 700px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img th:src="${item.imageURL}" class="img-fluid rounded-start" alt="as salamu aleykum">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${item.name}"></h5>
+                    <h5 class="card-title" th:text="${item.price}"></h5>
+                    <p class="card-text" th:text="${item.description}"></p>
+                    <form th:action="@{'/addtocart'}" method="post">
+                        <input type="hidden" th:value="${item.id}" name="itemId">
+                        <button class="btn btn-success" th:text="#{addtobasket}">Add To Basket</button>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <i class="fa fa-star" th:each="star:${#numbers.sequence(1, item.stars)}" style="margin-right: 3px"></i>
+                    <i class="fa fa-star-o" th:each="star:${#numbers.sequence(item.stars, 4)}" style="margin-right: 3px"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

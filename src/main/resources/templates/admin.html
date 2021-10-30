@@ -1,0 +1,14 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="index.html">
+    <div th:insert="layouts/navbar.html"></div>
+
+    <div class="container" layout:fragment="index">
+        <div class="row">
+            <div class="col-3 mt-5">
+                <div th:insert="layouts/admin_list.html"></div>
+            </div>
+            <div class="col-9 mt-5">
+                <div layout:fragment="admin"></div>
+            </div>
+        </div>
+    </div>
+</html>

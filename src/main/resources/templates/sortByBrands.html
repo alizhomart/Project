@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="home.html" layout:fragment="content">
+    <div class="mt-4">
+        <nav class="navbar-light bg-light mb-4" style="margin: 0">
+            <div class="container">
+                <form th:action="@{'/search'}" method="get" class="d-flex">
+                    <input class="form-control me-3" name="name" type="search" th:placeholder="#{search}" aria-label="Search" style="width: 900px;">
+                    <button class="btn btn-success" type="submit" style="width: 120px" th:text="#{search}"></button>
+                </form>
+            </div>
+        </nav>
+        <div class="row row-cols-1 row-cols-md-3 g-5">
+            <div class="col" th:each="it : ${items}">
+                <div class="card" style="height: 578px;">
+                    <img th:src="${it.imageURL}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h4><a style="text-decoration: none;" class="card-text" th:text="${it.name}" th:href="@{'/item-details/'+${it.id}+'.html'}"></a></h4>
+                        <h4 class="card-text" th:text="${it.price} + ' ₸'"></h4>
+                        <p class="card-title" th:text="${it.description}"></p>
+                    </div>
+                    <div class="card-footer">
+                        <i class="fa fa-star" th:each="star:${#numbers.sequence(1, it.stars)}" style="margin-right: 3px"></i>
+                        <i class="fa fa-star-o" th:each="star:${#numbers.sequence(it.stars, 4)}" style="margin-right: 3px"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

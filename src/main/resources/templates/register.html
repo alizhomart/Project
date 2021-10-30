@@ -1,0 +1,36 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="index.html">
+<div class="container" layout:fragment="index">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="login-form bg-dark mt-4 p-4">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${(param.error!=null)}">
+                    Error on passwords!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <form th:action="@{'/register'}"  method="post" class="row g-3">
+                    <h4 th:text="#{welcome}">Welcome</h4>
+                    <div class="col-12">
+                        <label th:text="#{fullname}+':'">Full Name</label>
+                        <input type="text" name="fullname" class="form-control" placeholder="Full Name">
+                    </div>
+                    <div class="col-12">
+                        <label th:text="#{email}+':'">Email</label>
+                        <input type="text" name="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="col-12">
+                        <label th:text="#{pass}+':'">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="col-12">
+                        <label th:text="#{repass}+':'">Repeat Password</label>
+                        <input type="password" name="password2" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-success float-end" th:text="#{signup}">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

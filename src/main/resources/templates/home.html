@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="index.html">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{'/css/bootstrap.min.css'}">
+</head>
+<body>
+<div layout:fragment="index">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-3">
+                    <div th:insert="layouts/categories.html"></div>
+                    <div th:insert="layouts/brands.html"></div>
+                    <div th:insert="layouts/payments.html"></div>
+                </div>
+                <div class="col-9">
+                    <div layout:fragment="content"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <diV class="col-12">
+                    <div th:insert="layouts/footer.html"></div>
+                </diV>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript" th:src="@{'/js/bootstrap.min.js'}"></script>
+</body>
+</html>

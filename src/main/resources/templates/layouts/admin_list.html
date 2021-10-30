@@ -1,0 +1,6 @@
+<ul class="list-group" xmlns:th="http://www.thymeleaf.org">
+    <li class="list-group-item " style="background-color: #198754" aria-current="true" th:text="#{manage}">Management</li>
+    <a th:href="@{'/adminUsers'}" class="list-group-item list-group-item-action" th:text="#{users}">Users</a>
+    <a th:href="@{'/adminItems'}" class="list-group-item list-group-item-action" th:text="#{items}">Items</a>
+    <a th:href="@{'/adminBrands'}" class="list-group-item list-group-item-action" th:text="#{brands}">Brands</a>
+</ul>

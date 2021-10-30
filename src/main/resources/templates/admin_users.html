@@ -1,0 +1,81 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin.html">
+  <div class="container-fluid" layout:fragment="admin">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" th:text="#{addU}">
+          ADD USER/MODERATOR/ADMIN
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <form th:action="@{'/add-user'}" method="post">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel" th:text="#{addU}">Add User</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="mb-3">
+                              <label th:text="#{fullname}+ ':'">Full Name</label>
+                              <input class="form-control" type="text" name="fullname" placeholder="Insert Full Name">
+                          </div>
+                          <div class="mb-3">
+                              <label th:text="#{email}+ ':'">Email</label>
+                              <input class="form-control" type="text" name="email" placeholder="Insert Email">
+                          </div>
+                          <div class="mb-3">
+                              <label th:text="#{pass}+ ':'">Password</label>
+                              <input class="form-control" type="password" name="password" placeholder="Insert password">
+                          </div>
+                          <div class="mb-3">
+                              <label th:text="#{repass}+':'">Repeat Password</label>
+                              <input class="form-control" type="password" name="password2" placeholder="Insert password again">
+                          </div>
+                          <div class="mb-3">
+                              <label th:text="#{role}+':'">Role</label>
+                              <select name="roleId" class="form-control">
+                                  <option th:each="role : ${roles}" th:text="${role.role}" th:value="${role.role}"></option>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{close}">Close</button>
+                          <button type="submit" class="btn btn-primary" th:text="#{add}">Add</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+      <div class="row mt-4">
+          <div class="col-12">
+              <table class="table">
+                  <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th th:text="#{email}">EMAIL</th>
+                            <th th:text="#{fullname}">FULL NAME</th>
+                            <th th:text="#{role}">ROLE</th>
+                            <th th:text="#{del}">DELETE</th>
+                        </tr>
+                  </thead>
+                  <tbody>
+                      <tr th:each="u : ${users}">
+                          <td th:text="${u.id}"></td>
+                          <td th:text="${u.email}"></td>
+                          <td th:text="${u.fullname}"></td>
+                          <td>
+                              <span class="d-flex flex-column" th:each="role : ${u.roles}" th:text="${role.role}"></span>
+                          </td>
+                          <td>
+                              <form th:action="@{'/deleteuser'}" method="post">
+                                  <input type="hidden" name="id" th:value="${u.id}">
+                                  <button class="btn btn-danger" th:text="#{del}">Delete</button>
+                              </form>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</html>

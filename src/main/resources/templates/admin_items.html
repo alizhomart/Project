@@ -1,0 +1,101 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin.html">
+<div class="container-fluid" layout:fragment="admin">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" th:text="#{addI}">
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{'/add-item'}" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" th:text="#{addI}">Add New Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label th:text="#{name}+ ':'">Name:</label>
+                            <input class="form-control mt-2" name="name" type="text">
+                        </div>
+                        <div class="mb-3">
+                            <label th:text="#{desc}+ ':'">Description:</label>
+                            <input class="form-control mt-2" name="description" type="text">
+                        </div>
+                        <div class="mb-3">
+                            <label th:text="#{price}+ ':'">Price:</label>
+                            <input class="form-control mt-2" name="price" type="text">
+                        </div>
+                        <div class="mb-3">
+                            <label th:text="#{stars}+ ':'">Stars:</label>
+                            <input class="form-control mt-2" name="stars" type="number" th:max="${5}">
+                        </div>
+                        <div class="mb-3">
+                            <label th:text="#{addedd}+ ':'">Added Date:</label>
+                            <input class="form-control mt-2" name="added_date" type="date">
+                        </div>
+                        <div class="mb-3">
+                            <label th:text="#{imgurl}+ ':'">Image URL:</label>
+                            <input class="form-control mt-2" name="image" type="text">
+                        </div>
+                        <div class="mb-3">
+                            <label th:text="#{itp}+ ':'">In Top Page:</label>
+                            <select class="form-control mt-2" name="inTope">
+                                <option th:value="${true}" >Yes</option>
+                                <option th:value="${false}" >No</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label th:text="#{brand}+ ':'">Brand:</label>
+                            <select class="form-control mt-2" name="brandId">
+                                <option th:each="brn : ${brands}" th:text="${brn.name}" th:value="${brn.id}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" th:text="#{close}">Close</button>
+                        <button type="submit" class="btn btn-success" th:text="#{save}">Save Item</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th th:text="#{name}">NAME</th>
+                    <th th:text="#{price}">PRICE</th>
+                    <th th:text="#{stars}">RATING</th>
+                    <th th:text="#{addedd}">ADDED DATE</th>
+                    <th th:text="#{itp}">IN TOP PAGE</th>
+                    <th th:text="#{brand}">BRAND</th>
+                    <th th:text="#{details}">DETAILS</th>
+                    <th th:text="#{del}">DELETE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="it : ${items}">
+                    <td th:text="${it.id}"></td>
+                    <td th:text="${it.name}"></td>
+                    <td th:text="${it.price}"></td>
+                    <td th:text="${it.stars}"></td>
+                    <td th:text="${it.addedDate}"></td>
+                    <td th:text="${it.inTopPage}"></td>
+                    <td th:text="${it.brand.name}"></td>
+                    <td><a th:href="@{'/itemDetails/' + ${it.id}+'.html'}" class="btn btn-primary" th:text="#{details}">Details</a></td>
+                    <td>
+                        <form th:action="@{'/deleteItem'}" method="post">
+                            <input type="hidden" name="id" th:value="${it.id}">
+                            <button class="btn btn-danger" th:text="#{del}">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</html>

@@ -1,0 +1,66 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin.html">
+<div class="container-fluid" layout:fragment="admin">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" th:text="#{addB}">
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{'/addBrand'}" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" th:text="#{addB}"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label th:text="#{name} + ':'"></label>
+                            <input class="form-control mt-2" name="name" type="text">
+                        </div>
+                        <div class="mb-3">
+                            <label th:text="#{country}+ ':'"></label>
+                            <select class="form-control mt-2" name="countryId">
+                                <option th:each="cnt : ${countries}" th:text="${cnt.name} + ' / ' + ${cnt.code}" th:value="${cnt.id}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" th:text="#{close}"></button>
+                        <button type="submit" class="btn btn-success" th:text="#{save}"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th th:text="#{name}"></th>
+                    <th th:text="#{countries}"></th>
+                    <th th:text="#{details}"></th>
+                    <th th:text="#{del}"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each=" brand: ${brands}">
+                    <td th:text="${brand.id}"></td>
+                    <td th:text="${brand.name}"></td>
+                    <td th:text="${brand.country.name}"></td>
+                    <td><a th:href="@{'/brandDetails/' + ${brand.id}+'.html'}" class="btn btn-primary" th:text="#{details}">Details</a></td>
+                    <td>
+                        <form th:action="@{'/deleteBrand'}" method="post">
+                            <input type="hidden" name="id" th:value="${brand.id}">
+                            <button class="btn btn-danger" th:text="#{del}">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</html>

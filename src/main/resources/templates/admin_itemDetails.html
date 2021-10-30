@@ -1,0 +1,77 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin.html">
+<div class="container-fluid" layout:fragment="admin">
+  <div class="row">
+    <div class="col-12">
+      <h3 style="color: red" th:text="#{categories}"></h3>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${param.error!=null}">
+        Item not added or removed!!!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <div class="row my-2">
+        <table class="table table-striped mb-3">
+          <tr th:each="cat : ${item.categories}">
+            <td th:text="${cat.category}"></td>
+            <td style="width: 10%">
+              <form th:action="@{'/removecategory'}" method="post">
+                <input type="hidden" name="category_id" th:value="${cat.id}">
+                <input type="hidden" name="item_id" th:value="${item.id}">
+                <button class="btn btn-danger btn-sm"> - </button>
+              </form>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="row my-2">
+        <table class="table table-striped mb-3">
+          <tr th:each="cat : ${categories}">
+            <td th:text="${cat.category}"></td>
+            <td style="width: 10%">
+              <form th:action="@{'/assigncategory'}" method="post">
+                <input type="hidden" name="category_id" th:value="${cat.id}">
+                <input type="hidden" name="item_id" th:value="${item.id}">
+                <button class="btn btn-success btn-sm"> + </button>
+              </form>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h3 style="color: red">Item Details</h3>
+      <form th:action="@{'/editItem'}" method="post">
+        <div class="mb-3">
+          <label th:text="#{name} + ':'">Name:</label>
+          <input class="form-control mt-2" name="name" th:value="${item.name}" type="text">
+        </div>
+        <div class="mb-3">
+          <label th:text="#{desc}+ ':'">Description:</label>
+          <input class="form-control mt-2" name="desc" th:value="${item.description}" type="text">
+        </div>
+        <div class="mb-3">
+          <label th:text="#{price}+ ':'">Price:</label>
+          <input class="form-control mt-2" name="price" th:value="${item.price}" type="text">
+        </div>
+        <div class="mb-3">
+          <label th:text="#{stars}+ ':'">Stars:</label>
+          <input class="form-control mt-2" name="stars" th:value="${item.stars}" type="number" max="5">
+        </div>
+        <div class="mb-3">
+          <label th:text="#{itp}+ ':'">In Top Page:</label>
+          <select class="form-control mt-2" name="inTop">
+            <option th:value="true" th:text="#{yes}">Yes</option>
+            <option th:value="false" th:text="#{no}">No</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label th:text="#{brand}+ ':'">Brand:</label>
+          <select class="form-control mt-2" name="brandId">
+            <option th:each="brand : ${brands}" th:text="${brand.name}" th:value="${brand.id}"></option>
+          </select>
+        </div>
+        <div class="mb-3">
+            <input type="hidden" th:value="${item.id}" name="itemId">
+            <button class="btn btn-success mx-auto  " style="width: 200px;" th:text="#{edit}">Edit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</html>
